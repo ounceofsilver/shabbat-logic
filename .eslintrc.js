@@ -1,14 +1,10 @@
 module.exports = {
-	"env": {
-		"node": true,
-		// "browser": true,
-		"es6": true,
-		"mocha": true,
+	env: {
+		node: true,
+		mocha: true,
 	},
 
-	"parser": "babel-eslint",
-
-	"extends": "airbnb",
+	"extends": "airbnb-base",
 
 	"globals": {
 		"expect": true,
