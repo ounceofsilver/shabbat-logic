@@ -1,6 +1,6 @@
-const { isItShabbat, is } = require('./Shabbat');
-const { fridaySunset, havdala, candleLighting } = require('./HebrewTimes');
-const { sunset, nextOfWeek, ofWeek } = require('./DayMath');
+const { isItShabbat, is } = require('./src/Shabbat');
+const { fridaySunset, havdala, candleLighting } = require('./src/HebrewTimes');
+const { sunset, nextOfWeek, ofWeek } = require('./src/DayMath');
 
 module.exports = {
 	isItShabbat,
@@ -12,5 +12,5 @@ module.exports = {
 
 	sunset,
 	nextOfWeek,
-	ofWeek,	
+	ofWeek,
 }
