@@ -1,0 +1,14 @@
+image: atlassian/default-image:2
+
+pipelines:
+  pull-requests:
+    '**':
+      - step:
+          name: Test
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run lint
+            - npm run test
+            - npm run brutetest
