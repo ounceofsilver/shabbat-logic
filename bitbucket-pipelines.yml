@@ -9,7 +9,7 @@ pipelines:
   pull-requests:
     '**':
       - step:
-          name: Test
+          name: Test and Sonar
           caches:
             - node
             - sonarcloud
