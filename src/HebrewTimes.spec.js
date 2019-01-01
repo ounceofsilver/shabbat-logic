@@ -92,18 +92,12 @@ describe('HebrewTimes', () => {
 			testDates([
 				local(2018, 11, 24).startOf('day'),
 			], 24);
-			testDates([
-				local(2018, 8, 25).startOf('day'),
-			], 25);
 		});
 
 		it('should handle Saturday after havdala', () => {
 			testDates([
 				local(2018, 11, 24).endOf('day'),
 			], 24);
-			testDates([
-				local(2018, 8, 25).endOf('day'),
-			], 25);
 		});
 	});
 });
