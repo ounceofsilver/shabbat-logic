@@ -66,7 +66,7 @@ describe('Shabbat', () => {
 
 		it('should handle Saturday after havdala', () => {
 			testDates([
-				DateTime.local(2018, 8, 25).endOf('day'),
+				DateTime.local(2018, 11, 24).endOf('day'),
 			], Shabbat.is.NOT_SHABBAT);
 		});
 	});
