@@ -33,18 +33,13 @@ describe('Big Shabbat Test', () => {
 								minute,
 							});
 							const d = Shabbat.isItShabbat(o, lat, long).countDownTo;
-							try {
-								expect(d.zone.zoneName).to.equal(zone);
-								expect(d.month).to.equal(month);
-								expect(d.year).to.equal(2018);
-								if ([5, 6].indexOf(o.weekday) === -1) {
-									expect(d.weekday).to.equal(5);
-								} else {
-									expect(d.weekday).to.be.oneOf([5, 6]);
-								}
-							} catch (err) {
-								// console.log(o.toString(), d.toString());
-								throw err;
+							expect(d.zone.zoneName).to.equal(zone);
+							expect(d.month).to.equal(month);
+							expect(d.year).to.equal(2018);
+							if ([5, 6].indexOf(o.weekday) === -1) {
+								expect(d.weekday).to.equal(5);
+							} else {
+								expect(d.weekday).to.be.oneOf([5, 6]);
 							}
 						});
 					});
