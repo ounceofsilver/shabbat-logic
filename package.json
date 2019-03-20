@@ -7,8 +7,8 @@
   "private": false,
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint",
-      "pre-push": "npm run test"
+      "pre-commit": "yarn lint",
+      "pre-push": "yarn test"
     }
   },
   "nyc": {
@@ -25,8 +25,8 @@
   "scripts": {
     "lint": "eslint ./src/**/*.js",
     "test": "mocha ./src/**/*.spec.js",
-    "report": "nyc --reporter=lcov --reporter=text npm run test",
-    "scan": "npm run report && bash scripts/scan.sh",
+    "report": "nyc --reporter=lcov --reporter=text yarn test",
+    "scan": "yarn report && bash scripts/scan.sh",
     "unittest": "mocha ./src/**/*.unit.spec.js",
     "brutetest": "mocha ./src/**/*.brutetest.js",
     "tdd": "yarn test -w"
