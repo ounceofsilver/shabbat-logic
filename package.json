@@ -1,6 +1,6 @@
 {
   "name": "shabbat-logic",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "James Fulford <james.fulford@outlook.com>",
@@ -25,8 +25,8 @@
   },
   "scripts": {
     "build": "tsc",
-	"prebuild": "rm -rf ./dist",
-	"prepare": "yarn build",
+    "prebuild": "rm -rf ./dist",
+    "prepare": "yarn build",
     "lint": "tslint -p tsconfig.json",
     "test": "jest",
     "ci": "yarn test --ci",
@@ -35,7 +35,7 @@
     "tdd": "yarn test --watch"
   },
   "files": [
-	  "dist"
+    "dist"
   ],
   "devDependencies": {
     "@types/jest": "24.0.13",
