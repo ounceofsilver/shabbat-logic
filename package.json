@@ -25,6 +25,8 @@
   },
   "scripts": {
     "build": "tsc",
+	"prebuild": "rm -rf ./dist",
+	"prepare": "yarn build",
     "lint": "tslint -p tsconfig.json",
     "test": "jest",
     "ci": "yarn test --ci",
@@ -32,6 +34,9 @@
     "scan": "yarn report && bash scripts/scan.sh",
     "tdd": "yarn test --watch"
   },
+  "files": [
+	  "dist"
+  ],
   "devDependencies": {
     "@types/jest": "24.0.13",
     "@types/luxon": "1.13.0",
