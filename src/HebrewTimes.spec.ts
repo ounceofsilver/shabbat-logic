@@ -1,4 +1,5 @@
-const HebrewTimes = require('./HebrewTimes');
+import { candleLighting, fridaySunset, havdala } from './HebrewTimes';
+import { local } from './test/framework';
 
 describe('HebrewTimes', () => {
 	const location = [43, -71];
@@ -6,10 +7,10 @@ describe('HebrewTimes', () => {
 	describe('fridaySunset', () => {
 		const testDates = (list, day) => {
 			list.forEach((d) => {
-				const fs = HebrewTimes.fridaySunset(d, ...location);
-				expect(fs.weekday).to.equal(5);
-				expect(fs.day).to.equal(day);
-				expect(fs.zone).to.equal(d.zone);
+				const fs = fridaySunset(d, location[0], location[1]);
+				expect(fs.weekday).toBe(5);
+				expect(fs.day).toBe(day);
+				expect(fs.zone).toBe(d.zone);
 			});
 		};
 
@@ -21,33 +22,33 @@ describe('HebrewTimes', () => {
 				local(2018, 11, 20),
 				local(2018, 11, 21),
 				local(2018, 11, 22),
-			], 23);
+			],        23);
 		});
 
 		it('should handle friday before sunset', () => {
 			testDates([
 				local(2018, 11, 23).startOf('day'),
 				local(2018, 11, 23, 12),
-			], 23);
+			],        23);
 
 			testDates([
 				local(2018, 8, 24).startOf('day'),
-			], 24);
+			],        24);
 		});
 
 		it('should handle friday after sunset', () => {
 			testDates([
 				local(2018, 11, 16, 23, 59, 59),
-			], 16);
+			],        16);
 		});
 	});
 
 	describe('candleLighting', () => {
 		const testDates = (list) => {
 			list.forEach((d) => {
-				const fs = HebrewTimes.fridaySunset(d, ...location);
-				const cl = HebrewTimes.candleLighting(d, ...location);
-				expect(fs.diff(cl, 'minutes').minutes).to.equal(18);
+				const fs = fridaySunset(d, location[0], location[1]);
+				const cl = candleLighting(d, location[0], location[1]);
+				expect(fs.diff(cl, 'minutes').minutes).toBe(18);
 			});
 		};
 
@@ -70,10 +71,10 @@ describe('HebrewTimes', () => {
 	describe('havdala', () => {
 		const testDates = (list, day) => {
 			list.forEach((d) => {
-				const fs = HebrewTimes.havdala(d, ...location);
-				expect(fs.weekday).to.equal(6);
-				expect(fs.day).to.equal(day);
-				expect(fs.zone).to.equal(d.zone);
+				const fs = havdala(d, location[0], location[1]);
+				expect(fs.weekday).toBe(6);
+				expect(fs.day).toBe(day);
+				expect(fs.zone).toBe(d.zone);
 			});
 		};
 
@@ -85,19 +86,19 @@ describe('HebrewTimes', () => {
 				local(2018, 11, 21),
 				local(2018, 11, 22),
 				local(2018, 11, 23),
-			], 24);
+			],        24);
 		});
 
 		it('should handle Saturday before havdala', () => {
 			testDates([
 				local(2018, 11, 24).startOf('day'),
-			], 24);
+			],        24);
 		});
 
 		it('should handle Saturday after havdala', () => {
 			testDates([
 				local(2018, 11, 24).endOf('day'),
-			], 24);
+			],        24);
 		});
 	});
 });
