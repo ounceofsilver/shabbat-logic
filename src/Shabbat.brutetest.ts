@@ -1,5 +1,6 @@
-// const HebrewTimes = require('./HebrewTimes');
-const Shabbat = require('./Shabbat');
+import { DateTime } from 'luxon';
+
+import { isItShabbat } from './Shabbat';
 
 describe('Big Shabbat Test', () => {
 	function range(x, y, n = 1) {
@@ -18,28 +19,27 @@ describe('Big Shabbat Test', () => {
 		{ zone: 'Asia/Tokyo', lat: 36, long: 140 },
 		{ zone: 'Europe/London', lat: 52, long: 0 },
 	].forEach(({ zone, lat, long }) => {
-		it(`should work in ${zone}`, function zoneTest() {
-			this.timeout(120 * 1000);
+		it(`should work in ${zone}`, () => {
 			range(1, 13, 3).forEach((month) => { // every month
 				range(1, 8).forEach((day) => { // first week
 					range(1, 24).forEach((hour) => { // every hour
 						range(0, 60, 15).forEach((minute) => { // every 15 minutes
 							const o = DateTime.fromObject({
 								zone,
-								year: 2018,
-								month,
 								day,
 								hour,
 								minute,
+								month,
+								year: 2018,
 							});
-							const d = Shabbat.isItShabbat(o, lat, long).countDownTo;
-							expect(d.zone.zoneName).to.equal(zone);
-							expect(d.month).to.equal(month);
-							expect(d.year).to.equal(2018);
+							const d = isItShabbat(o, lat, long).countDownTo;
+							expect(d.zone).toEqual(expect.objectContaining({ zoneName: zone }));
+							expect(d.month).toBe(month);
+							expect(d.year).toBe(2018);
 							if ([5, 6].indexOf(o.weekday) === -1) {
-								expect(d.weekday).to.equal(5);
+								expect(d.weekday).toBe(5);
 							} else {
-								expect(d.weekday).to.be.oneOf([5, 6]);
+								expect([5, 6]).toContain(d.weekday);
 							}
 						});
 					});

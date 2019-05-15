@@ -1,5 +1,6 @@
-const HebrewTimes = require('./HebrewTimes');
-const Shabbat = require('./Shabbat');
+import { DateTime } from 'luxon';
+import { candleLighting } from './HebrewTimes';
+import { is, isItShabbat } from './Shabbat';
 
 describe('Shabbat', () => {
 	const location = [43, -71];
@@ -7,9 +8,9 @@ describe('Shabbat', () => {
 	describe('isItShabbat', () => {
 		function testDates(dates, expectation) {
 			dates.forEach((d) => {
-				const o = Shabbat.isItShabbat(d, ...location);
-				expect(o.period).to.equal(expectation);
-				expect(o.countDownTo.zone).to.equal(d.zone);
+				const o = isItShabbat(d, location[0], location[1]);
+				expect(o.period).toBe(expectation);
+				expect(o.countDownTo.zone).toBe(d.zone);
 			});
 		}
 
@@ -30,44 +31,51 @@ describe('Shabbat', () => {
 				DateTime.local(2018, 8, 23).startOf('day'),
 				DateTime.local(2018, 8, 23, 12),
 				DateTime.local(2018, 8, 23).endOf('day'),
-			], Shabbat.is.NOT_SHABBAT);
+			],        is.NOT_SHABBAT);
 		});
 
 		it('should handle Friday before candlelighting', () => {
 			testDates([
 				DateTime.local(2018, 8, 24).startOf('day'),
-			], Shabbat.is.NOT_SHABBAT);
+			],        is.NOT_SHABBAT);
 		});
 
 		it('should handle Friday after candlelighting but before sunset', () => {
-			const cl = HebrewTimes.candleLighting(
+			const cl = candleLighting(
 				DateTime.fromObject({
-					year: 2018, month: 8, day: 24, hour: 19, minute: 22, second: 30, zone: 'America/New_York',
+					day: 24,
+					hour: 19,
+					minute: 22,
+					month: 8,
+					second: 30,
+					year: 2018,
+					zone: 'America/New_York',
 				}),
-				...location,
+				location[0],
+				location[1],
 			);
 			testDates([
 				cl.plus({ seconds: 1 }),
 				cl.plus({ minutes: 17 }),
-			], Shabbat.is.CANDLELIGHTING);
+			],        is.CANDLELIGHTING);
 		});
 
 		it('should handle Friday after sunset', () => {
 			testDates([
 				DateTime.local(2018, 8, 24).endOf('day'),
-			], Shabbat.is.SHABBAT);
+			],        is.SHABBAT);
 		});
 
 		it('should handle Saturday before havdala', () => {
 			testDates([
 				DateTime.local(2018, 8, 25).startOf('day'),
-			], Shabbat.is.SHABBAT);
+			],        is.SHABBAT);
 		});
 
 		it('should handle Saturday after havdala', () => {
 			testDates([
 				DateTime.local(2018, 11, 24).endOf('day'),
-			], Shabbat.is.NOT_SHABBAT);
+			],        is.NOT_SHABBAT);
 		});
 	});
 });

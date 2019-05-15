@@ -1,14 +1,15 @@
 {
   "name": "shabbat-logic",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "author": "James Fulford <james.fulford@outlook.com>",
   "license": "MIT",
   "private": false,
   "husky": {
     "hooks": {
       "pre-commit": "yarn lint",
-      "pre-push": "yarn test"
+      "pre-push": "yarn ci"
     }
   },
   "nyc": {
@@ -23,26 +24,23 @@
     "suncalc": "1.8.0"
   },
   "scripts": {
-    "lint": "eslint ./src/**/*.js",
-    "test": "mocha ./src/**/*.spec.js",
-    "report": "nyc --reporter=lcov --reporter=text yarn test",
+    "build": "tsc",
+    "lint": "tslint -p tsconfig.json",
+    "test": "jest",
+    "ci": "yarn test --ci",
+    "report": "yarn test --coverage",
     "scan": "yarn report && bash scripts/scan.sh",
-    "unittest": "mocha ./src/**/*.unit.spec.js",
-    "brutetest": "mocha ./src/**/*.brutetest.js",
-    "tdd": "yarn test -w"
+    "tdd": "yarn test --watch"
   },
   "devDependencies": {
-    "babel-eslint": "10.0.1",
-    "chai": "4.2.0",
-    "eslint": "5.9.0",
-    "eslint-config-airbnb-base": "13.1.0",
-    "eslint-plugin-import": "2.14.0",
-    "mocha": "5.2.0",
-    "mocha-eslint": "4.1.0",
-    "nyc": "13.1.0",
-    "proxyquire": "2.1.0",
-    "sinon": "7.1.1",
-    "sinon-chai": "3.2.0",
-    "sonarqube-scanner": "2.1.2"
+    "@types/jest": "24.0.13",
+    "@types/luxon": "1.13.0",
+    "husky": "2.3.0",
+    "jest": "24.8.0",
+    "sonarqube-scanner": "2.1.2",
+    "ts-jest": "24.0.2",
+    "tslint": "5.16.0",
+    "tslint-config-airbnb": "5.11.1",
+    "typescript": "3.4.5"
   }
 }
